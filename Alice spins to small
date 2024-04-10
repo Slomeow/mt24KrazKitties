@@ -1,0 +1,20 @@
+#include <Servo.h>
+Servo myservo;  // create servo object to control a servo
+
+const int buttonPin = 1; //the pin where electricity wil flow to the wires
+int buttonVal;
+
+void setup() {
+  myservo.attach(10);  // attaches the servo on pin 9 to the servo object
+  pinMode(buttonPin, INPUT);
+
+}
+
+void loop() {
+  if(digitalRead(buttonPin) == HIGH){
+    myservo.write(180);              // tell servo to go to position in variable 'pos'
+    delay(15);  
+    }else{
+      myservo.write(0);   
+  }
+}
