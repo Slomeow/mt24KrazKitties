@@ -1,6 +1,6 @@
 #include <Servo.h>
 
-Servo myservo;  //cat spin
+Servo myservo;  //queen pops up 
 
 
 const int buttonPin = 2; //alice steps on spot on ground to activate button
