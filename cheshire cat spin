@@ -1,26 +1,37 @@
 #include <Servo.h>
 
-Servo myservo;  //cat spin
+Servo catservo;  //cat spin
 
-
-const int buttonPin = 2; //alice steps on spo on ground to activate button
-int buttonVal;
-int pos = 0;
+const int buttonPin = 3; //alice steps on spo on ground to activate button
+int buttonState = 0;
+int previousButtonState = 0;
+//int pos = 0;
 
 void setup() {
-  myservo.attach(9);  //attaches cat servo to pin 9
+  catservo.attach(8);  //attaches cat servo to pin 9
   pinMode(buttonPin, INPUT);
+  catservo.write(180);
+  Serial.begin(9600);
 }
 
 void loop() {
-  if(digitalRead(buttonPin) == LOW){
-   pos = 180;
-    myservo.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(15);             
-   
+
+  buttonState = digitalRead(buttonPin);
+  if (buttonState != previousButtonState) {
+    if (buttonState == HIGH) {
+      Serial.println("button presseed");
+   for (int pos = 180; pos >= 0; pos -= 1) { // goes from 0 degrees to 180 degrees
+    // in steps of 1 degree
+    catservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15 ms for the servo to reach the position
+
+  }
     }else{
-      pos = 0;
-       delay(15);
-      myservo.write(pos);  
+      Serial.println("button released");
+ //pos  = 0;
+   // catservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);     
+    }
   }
 }
+
