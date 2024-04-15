@@ -1,26 +1,31 @@
 #include <Servo.h>
 
 Servo myservo1;  //alice spin servo
-Servo myservo2; //door servo
 
 
-const int buttonPin = 1; //the pin where electricity wil flow to the wires
-int buttonVal;
+
+const int buttonPin = 2; //the pin where electricity wil flow to the wires
+//int buttonVal;
+int buttonState = 0;
+int previousButtonState = 0;
 
 void setup() {
-  myservo1.attach(10);  //attaches alice servo to pin 10
-  myservo2.attach(11); //attaches door servo to pin 11
+  myservo1.attach(9);  //attaches alice servo to pin 10
+
   pinMode(buttonPin, INPUT);
+  Serial.begin(9600);
 
 }
 
 void loop() {
-  if(digitalRead(buttonPin) == HIGH){
-    myservo1.write(180);
-    myservo2.write(90);             
-    delay(15);  
+  buttonState = digitalRead(buttonPin);
+  if (buttonState != previousButtonState) {
+    if (buttonState == HIGH) {
+      Serial.println("button presseed");
+      myservo1.write(180);
     }else{
-      myservo1.write(0);  
-      myservo2.write(0); 
+      Serial.println("button released");
+    }
   }
+  previousButtonState = buttonState;
 }
