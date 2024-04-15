@@ -1,29 +1,28 @@
 #include <Servo.h>
 
-Servo myservo;  //queen pops up 
+Servo queenpop;  //queen poppinng up servo
 
-
-const int buttonPin = 2; //alice steps on spot on ground to activate button
-int buttonVal;
-int pos = 0;
+const int buttonPin = 2; //the pin where electricity wil flow to the wires
+//int buttonVal;
+int buttonState = 0;
+int previousButtonState = 0;
 
 void setup() {
-  myservo.attach(9);  //attaches queen servo to pin 9
+  queenpop.attach(9);  //attaches alice servo to pin 9
+
   pinMode(buttonPin, INPUT);
+  Serial.begin(9600);
 }
 
-//servo is put horizontally
-//using the half servo top (extending only on one side)
-//sweeping motion
 void loop() {
-  if(digitalRead(buttonPin) == LOW){
-   pos = 90;
-    myservo.write(pos);              
-    delay(15);             
-   
+  buttonState = digitalRead(buttonPin);
+  if (buttonState != previousButtonState) {
+    if (buttonState == HIGH) {
+      Serial.println("button presseed");
+      queenpop.write(180);
     }else{
-      pos = 220;
-       delay(15);
-      myservo.write(pos);  
+      Serial.println("button released");
+    }
   }
+  previousButtonState = buttonState;
 }
