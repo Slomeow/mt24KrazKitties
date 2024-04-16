@@ -4,10 +4,9 @@ Servo Aspinservo;  //alice spin servo
 
 
 
-const int buttonPin = 2; //the pin where electricity wil flow to the wires
-//int buttonVal;
-int buttonState = 0;
-int previousButtonState = 0;
+const int DrinkMePin = 2; 
+int DrinkMebuttonState = 0;
+int DrinkMepreviousButtonState = 0;
 
 void setup() {
   Aspinservo.attach(9);  //attaches alice servo to pin 10
@@ -18,15 +17,14 @@ void setup() {
 }
 
 void loop() {
-  buttonState = digitalRead(buttonPin);
-  if (buttonState != previousButtonState) {
-    if (buttonState == HIGH) {
-      Serial.println("button presseed");
+  DrinkMebuttonState = digitalRead(DrinkMePin);
+  if (DrinkMebuttonState != DrinkMepreviousButtonState) {
+    if (DrinkMebuttonState == HIGH) {
       Aspinservo.write(-180);
       delay(15);
     }else{
       Serial.println("button released");
     }
   }
-  previousButtonState = buttonState;
+  DrinkMepreviousButtonState = DrinkMebuttonState;
 }
