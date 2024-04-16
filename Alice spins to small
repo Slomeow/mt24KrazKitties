@@ -1,6 +1,6 @@
 #include <Servo.h>
 
-Servo myservo1;  //alice spin servo
+Servo Aspinservo;  //alice spin servo
 
 
 
@@ -10,7 +10,7 @@ int buttonState = 0;
 int previousButtonState = 0;
 
 void setup() {
-  myservo1.attach(9);  //attaches alice servo to pin 10
+  Aspinservo.attach(9);  //attaches alice servo to pin 10
 
   pinMode(buttonPin, INPUT);
   Serial.begin(9600);
@@ -22,7 +22,8 @@ void loop() {
   if (buttonState != previousButtonState) {
     if (buttonState == HIGH) {
       Serial.println("button presseed");
-      myservo1.write(180);
+      Aspinservo.write(-180);
+      delay(15);
     }else{
       Serial.println("button released");
     }
