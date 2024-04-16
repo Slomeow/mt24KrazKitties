@@ -1,22 +1,28 @@
-#include <Servo.h>
+const int LED_blue1 = 4;   //the first blue pin
+const int LED_white1 = 5;  //the white pin
+const int LED_blue2 = 6;  //2nd blue pin
 
-Servo myservo;  // create servo object to control a servo
-// twelve servo objects can be created on most boards
-
-int pos = 0;    // variable to store the servo position
-
+// the setup function runs once when you press reset or power the board
 void setup() {
-  myservo.attach(9);  // attaches the servo on pin 9 to the servo object
+  // initialize digital pin LEDs as an output.
+  pinMode(LED_blue1, OUTPUT);
+  pinMode(LED_white1, OUTPUT);
+  pinMode(LED_blue2, OUTPUT);
+ // pinMode(LED_white2, OUTPUT);
 }
 
+// the loop function runs over and over again forever
 void loop() {
-  for (pos = 90; pos <= 180; pos += 1) { // goes from 0 degrees to 180 degrees
-    // in steps of 1 degree
-    myservo.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(10);                       // waits 15 ms for the servo to reach the position
-  }
-  for (pos = 180; pos >= 90; pos -= 1) { // goes from 180 degrees to 0 degrees
-    myservo.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(10);                       // waits 15 ms for the servo to reach the position
-  }
+  digitalWrite(LED_blue1, HIGH);  // turn the blue LED on (HIGH is the voltage level)
+  delay(1000);                      // wait for a second
+  digitalWrite(LED_blue1, LOW);   // turn the blue LED off by making the voltage LOW
+  delay(10);                      // skip 
+  digitalWrite(LED_white1, HIGH); //turn white LED on
+  delay(1000);                    //delay
+  digitalWrite(LED_white1, LOW);  //turn off LED
+  delay(10);                      //skip
+  digitalWrite(LED_blue2, HIGH);  //2nd blue LED ON
+  delay(1000);                    //delay
+  digitalWrite(LED_blue2, LOW);   //2nd blue OFF
+  delay(10);
 }
