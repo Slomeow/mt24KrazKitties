@@ -11,7 +11,7 @@ int DrinkMepreviousButtonState = 0;
 void setup() {
   Aspinservo.attach(9);  //attaches alice servo to pin 10
 
-  pinMode(buttonPin, INPUT);
+  pinMode(DrinkMePin, INPUT);
   Serial.begin(9600);
 
 }
