@@ -1,90 +1,87 @@
 #include <Servo.h>
 
-//BUNNY INTERACTION 1
-const int LED_blue1 = 4;   //the first blue pin
-const int LED_white1 = 5;  //the white pin
-const int LED_blue2 = 6;  //2nd blue pin
+// Servo objects
+Servo catservo; // Cat spin servo
+Servo Aspinservo; // Alice spin servo
 
-//ALICE SPIN INTERACTION 2
-Servo Aspinservo;  //alice spin servo: Aspinservo
-const int DrinkMePin = 2;
-int DrinkMebuttonState = 0;
-int DrinkMepreviousButtonState = 0;
+// Button pins
+const int catButtonPin = 3; // Alice steps on the spot to activate button
+const int aliceButtonPin = 2; // The pin where electricity will flow to the wires
 
-//CAT INTERACTION 3
-Servo catservo;  //cat spin servo name: Cat Servo
-const int CatPin = 3; //alice steps on spo on ground to activate button
-int CatbuttonState = 0;
-int CatpreviousButtonState = 0;
+// LED pins
+const int LED_blue1 = 4;   // The first blue pin
+const int LED_white1 = 5; // The white pin
+const int LED_blue2 = 6; // 2nd blue pin
 
+// Button states
+int catButtonState = 0;
+int aliceButtonState = 0;
+int previousCatButtonState = 0;
+int previousAliceButtonState = 0;
 
 void setup() {
-  // BUNNY INTERACTION 1
-  pinMode(LED_blue1, OUTPUT);
-  pinMode(LED_white1, OUTPUT);
-  pinMode(LED_blue2, OUTPUT);
+ // Attach servos
+ catservo.attach(8); // Attaches cat servo to pin 8
+ Aspinservo.attach(9); // Attaches Alice servo to pin 9
 
-//ALICE SPIN INTERACTION 2
- Aspinservo.attach(9);  //attaches alice servo to pin 10
-  pinMode(DrinkMePin, INPUT);
+ // Set button pins as input
+ pinMode(catButtonPin, INPUT);
+ pinMode(aliceButtonPin, INPUT);
 
-//CAT INTERACTION 3
-  catservo.attach(8);  //attaches cat servo to pin 8
-  pinMode(CatPin, INPUT);
-  catservo.write(180);
-  Serial.begin(9600);
+ // Set LED pins as output
+ pinMode(LED_blue1, OUTPUT);
+ pinMode(LED_white1, OUTPUT);
+ pinMode(LED_blue2, OUTPUT);
+
+ // Initialize serial communication
+ Serial.begin(9600);
+
+ // Initial servo positions
+ catservo.write(180);
+ Aspinservo.write(-180);
 }
 
 void loop() {
+ // Cat button logic
+ catButtonState = digitalRead(catButtonPin);
+ if (catButtonState != previousCatButtonState) {
+    if (catButtonState == HIGH) {
+      Serial.println("Cat button pressed");
+      for (int pos = 180; pos >= 0; pos -= 1) {
+        catservo.write(pos);
+        delay(15);
+      }
+    } else {
+      Serial.println("Cat button released");
+      delay(15);
+    }
+ }
+ previousCatButtonState = catButtonState;
 
-//BUNNY INTERACTION 1
-  digitalWrite(LED_blue1, HIGH);  // turn the blue LED on (HIGH is the voltage level)
-  delay(1000);                      // wait for a second
-  digitalWrite(LED_blue1, LOW);   // turn the blue LED off by making the voltage LOW
-  delay(10);                      // skip 
-  digitalWrite(LED_white1, HIGH); //turn white LED on
-  delay(1000);                    //delay
-  digitalWrite(LED_white1, LOW);  //turn off LED
-  delay(10);                      //skip
-  digitalWrite(LED_blue2, HIGH);  //2nd blue LED ON
-  delay(1000);                    //delay
-  digitalWrite(LED_blue2, LOW);   //2nd blue OFF
-  delay(10);
-
-//ALICE SPIN INTERACTION 2
-  DrinkMebuttonState = digitalRead(DrinkMePin);
-  if (DrinkMebuttonState != DrinkMepreviousButtonState) {
-    if (DrinkMebuttonState == HIGH) {
+ // Alice button logic
+ aliceButtonState = digitalRead(aliceButtonPin);
+ if (aliceButtonState != previousAliceButtonState) {
+    if (aliceButtonState == HIGH) {
+      Serial.println("Alice button pressed");
       Aspinservo.write(-180);
       delay(15);
-    }else{
-      Serial.println("button released");
+    } else {
+      Serial.println("Alice button released");
     }
-  }
-  DrinkMepreviousButtonState = DrinkMebuttonState;
+ }
+ previousAliceButtonState = aliceButtonState;
 
-//CAT INTERACTION 3 {
-CatbuttonState = digitalRead(CatPin);
-  if (CatbuttonState != CatpreviousButtonState) {
-    if (CatbuttonState == HIGH) {
-      Serial.println("button presseed");
-   for (int pos = 180; pos >= 0; pos -= 1) { // goes from 0 degrees to 180 degrees
-    catservo.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(15);                       // waits 15 ms for the servo to reach the position
-  }
-    }else{
-      Serial.println("button released");
- //pos  = 0;
-   // catservo.write(pos);              
-    delay(15);     
-      }
-    }
-  }
+ // LED logic
+ digitalWrite(LED_blue1, HIGH);
+ delay(1000);
+ digitalWrite(LED_blue1, LOW);
+ delay(10);
+ digitalWrite(LED_white1, HIGH);
+ delay(1000);
+ digitalWrite(LED_white1, LOW);
+ delay(10);
+ digitalWrite(LED_blue2, HIGH);
+ delay(1000);
+ digitalWrite(LED_blue2, LOW);
+ delay(10);
 }
-
-
-
-
-
-
-
