@@ -7,11 +7,16 @@ Servo Aspinservo; // Alice spin servo
 // Button pins
 const int catButtonPin = 3; // Alice steps on the spot to activate button
 const int aliceButtonPin = 2; // The pin where electricity will flow to the wires
+const int LEDbutton = 1; //ALICE hole Button
 
 // LED pins
-const int LED_blue1 = 4;   // The first blue pin
-const int LED_white1 = 5; // The white pin
-const int LED_blue2 = 6; // 2nd blue pin
+const int LED_blue1 = 10;   // The first blue pin
+const int LED_white1 = 11; // The white pin
+const int LED_blue2 = 12; // 2nd blue pin
+const int LED_first = 13; //1st LED
+
+int ledState = LOW;
+
 
 // Button states
 int catButtonState = 0;
@@ -32,6 +37,7 @@ void setup() {
  pinMode(LED_blue1, OUTPUT);
  pinMode(LED_white1, OUTPUT);
  pinMode(LED_blue2, OUTPUT);
+ pinMode(LED_first, OUTPUT);
 
  // Initialize serial communication
  Serial.begin(9600);
@@ -72,6 +78,17 @@ void loop() {
  previousAliceButtonState = aliceButtonState;
 
  // LED logic
+ if (ledState == LOW) {
+      ledState = HIGH;
+    } else {
+      ledState = LOW;
+    }
+
+    // set the LED with the ledState of the variable:
+    digitalWrite(LED_first, ledState);
+  //LED Travel line
+
+  if()
  digitalWrite(LED_blue1, HIGH);
  delay(1000);
  digitalWrite(LED_blue1, LOW);
